@@ -303,33 +303,38 @@ task.spawn(function()
 		TeleportService:Teleport(game.PlaceId, player)
 	end)
 
-	-- Rejoin si está quieto 7 segundos
-	local character = player.Character or player.CharacterAdded:Wait()
-	local root = character:WaitForChild("HumanoidRootPart")
-
-	local ultimaPos = root.Position
-	local tiempo = 0
+	task.spawn(function()
+	local Players = game:GetService("Players")
+	local TeleportService = game:GetService("TeleportService")
+	local player = Players.LocalPlayer
 
 	while task.wait(1) do
-		if player.Character ~= character then
-			character = player.Character or player.CharacterAdded:Wait()
-			root = character:WaitForChild("HumanoidRootPart")
-			ultimaPos = root.Position
-			tiempo = 0
-		end
+		local puerta = workspace.GameplayParts.Doors.Normal.Paintable:FindFirstChild("White")
 
-		if (root.Position - ultimaPos).Magnitude < 1 then
-			tiempo += 1
+		-- Solo revisar si la puerta blanca existe
+		if puerta and puerta:IsDescendantOf(workspace) then
+			local character = player.Character or player.CharacterAdded:Wait()
+			local root = character:WaitForChild("HumanoidRootPart")
 
-			if tiempo >= 7 then
-				TeleportService:Teleport(game.PlaceId, player)
-				break
+			local pos = root.Position
+			local tiempo = 0
+
+			while puerta and puerta:IsDescendantOf(workspace) do
+				task.wait(1)
+
+				if (root.Position - pos).Magnitude < 1 then
+					tiempo += 1
+
+					if tiempo >= 7 then
+						TeleportService:Teleport(game.PlaceId, player)
+						return
+					end
+				else
+					pos = root.Position
+					tiempo = 0
+				end
 			end
-		else
-			ultimaPos = root.Position
-			tiempo = 0
 		end
 	end
 end)
-
 loadstring(game:HttpGet("https://raw.githubusercontent.com/davidsebas348-hub/Text480/refs/heads/main/Text480.lua"))()
