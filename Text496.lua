@@ -6,7 +6,7 @@ repeat task.wait() until game:IsLoaded()
 
 -- 🔁 RE-EJECUTAR EN TELEPORT
 if queue_on_teleport then
-    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/davidsebas348-hub/Text489/refs/heads/main/Text489.lua"))()')
+    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/davidsebas348-hub/Text496/refs/heads/main/Text496.lua"))()')
 end
 local keyTerminado = false
 
