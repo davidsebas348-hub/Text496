@@ -337,4 +337,5 @@ task.spawn(function()
 		end
 	end
 end)
+		end)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/davidsebas348-hub/Text480/refs/heads/main/Text480.lua"))()
